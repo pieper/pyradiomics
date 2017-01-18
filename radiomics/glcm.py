@@ -1,7 +1,5 @@
 import numpy
-import collections
 from radiomics import base, imageoperations
-import SimpleITK as sitk
 from tqdm import trange
 
 
@@ -173,7 +171,7 @@ class RadiomicsGLCM(base.RadiomicsFeaturesBase):
       self.P_glcm += numpy.transpose(self.P_glcm, (1, 0, 2))
 
     # Optionally apply a weighting factor
-    if not self.weightingNorm is None:
+    if self.weightingNorm is not None:
       pixelSpacing = self.inputImage.GetSpacing()[::-1]
       weights = numpy.empty(len(angles))
       for a_idx, a in enumerate(angles):
@@ -393,7 +391,7 @@ class RadiomicsGLCM(base.RadiomicsFeaturesBase):
     """
     pxSuby = self.coefficients['pxSuby']
     kValuesDiff = self.coefficients['kValuesDiff']
-    diffavg =  numpy.sum((kValuesDiff[:, None] * pxSuby), 0)
+    diffavg = numpy.sum((kValuesDiff[:, None] * pxSuby), 0)
     return (diffavg.mean())
 
   def getDifferenceEntropyFeatureValue(self):
@@ -421,7 +419,7 @@ class RadiomicsGLCM(base.RadiomicsFeaturesBase):
     """
     pxSuby = self.coefficients['pxSuby']
     kValuesDiff = self.coefficients['kValuesDiff']
-    diffavg = numpy.sum((kValuesDiff[:, None] * pxSuby), 0, keepdims= True)
+    diffavg = numpy.sum((kValuesDiff[:, None] * pxSuby), 0, keepdims=True)
     diffvar = numpy.sum((pxSuby * ((kValuesDiff[:, None] - diffavg) ** 2)), 0)
     return (diffvar.mean())
 
@@ -565,7 +563,7 @@ class RadiomicsGLCM(base.RadiomicsFeaturesBase):
     """
     i = self.coefficients['i']
     j = self.coefficients['j']
-    id  = numpy.sum((self.P_glcm / (1 + ((numpy.abs(i - j))[:, :, None]))), (0, 1) )
+    id = numpy.sum((self.P_glcm / (1 + ((numpy.abs(i - j))[:, :, None]))), (0, 1))
     return (id.mean())
 
   def getIdnFeatureValue(self):

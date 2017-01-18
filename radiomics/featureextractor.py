@@ -9,7 +9,7 @@ import pkgutil
 import inspect
 import pykwalify.core
 import radiomics
-from radiomics import base, imageoperations, generalinfo
+from radiomics import imageoperations, generalinfo
 
 
 class RadiomicsFeaturesExtractor:

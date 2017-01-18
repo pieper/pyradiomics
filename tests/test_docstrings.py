@@ -34,7 +34,7 @@ class TestDocStrings:
       for featureClassName, featureClass in featureClasses.iteritems():
         logging.info('generate_scenarios %s', featureClassName)
         doc = featureClass.__doc__
-        assert(doc != None)
+        assert(doc is not None)
 
         featureNames = featureClass.getFeatureNames()
         for f in featureNames:
@@ -45,6 +45,6 @@ class TestDocStrings:
       global featureClasses
       logging.info('%s', featureName)
       features = featureClasses[featureClassName]
-      doc = eval('features.get'+featureName+'FeatureValue.__doc__')
+      doc = getattr(features, "get%sFeatureValue" % featureName).__doc__
       logging.info('%s', doc)
-      assert(doc != None)
+      assert(doc is not None)

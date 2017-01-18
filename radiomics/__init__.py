@@ -42,7 +42,7 @@ logger.addHandler(handler)
 debug(False)  # force level=WARNING, in case logging default is set differently (issue 102)
 
 # For convenience, import the most used packages into the "pyradiomics" namespace
-import collections, numpy
+import collections, numpy  # noqa: F401
 
 from ._version import get_versions
 
