@@ -1,0 +1,60 @@
+# Config file for automatic testing at travis-ci.org
+
+branches:
+ only:
+  - master
+
+language: python
+
+matrix:
+  include:
+    - os: linux
+      python: "3.4"
+
+    - os: linux
+      python: "3.3.5"
+
+    - os: linux
+      python: "2.7"
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=3.4.5
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=3.3.6
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=2.7.12
+
+cache:
+  directories:
+    - $HOME/.pyenv/versions/3.4.5
+    - $HOME/.pyenv/versions/3.3.6
+    - $HOME/.pyenv/versions/2.7.12
+    - $HOME/downloads
+
+addons:
+  apt:
+    packages:
+      - gfortran
+      - libboost-python-dev
+      - python-vtk
+
+before_install:
+  - pip install scikit-ci==0.12.0 scikit-ci-addons==0.11.0
+  - ci_addons --install ../addons
+
+install:
+  - ci install
+
+script:
+  - ci test
+
+after_success:
+  - ci after_test
